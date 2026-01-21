@@ -34,14 +34,24 @@ const loadConfigs = async () => {
   tableBody.innerHTML = '';
   configs.forEach((config) => {
     const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${config.id}</td>
-      <td>${config.alias}</td>
-      <td>${config.server}</td>
-      <td>${config.protocol}</td>
-      <td>${config.port ?? ''}</td>
-      <td><span class="badge">${config.active ? 'Active' : 'Inactive'}</span></td>
-    `;
+    const appendCell = (value) => {
+      const cell = document.createElement('td');
+      cell.textContent = value ?? '';
+      row.appendChild(cell);
+    };
+
+    appendCell(config.id);
+    appendCell(config.alias);
+    appendCell(config.server);
+    appendCell(config.protocol);
+    appendCell(config.port ?? '');
+
+    const statusCell = document.createElement('td');
+    const badge = document.createElement('span');
+    badge.className = 'badge';
+    badge.textContent = config.active ? 'Active' : 'Inactive';
+    statusCell.appendChild(badge);
+    row.appendChild(statusCell);
     row.addEventListener('click', () => fillForm(config));
     tableBody.appendChild(row);
   });
