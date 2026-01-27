@@ -15,11 +15,20 @@
           <h1>Email Config Manager</h1>
           <p>Manage mail parser settings stored in a NoSQL collection.</p>
         </div>
+        <div class="header-actions">
+          <button type="button" id="refresh-btn" class="secondary">Refresh</button>
+        </div>
       </header>
 
       <div class="grid">
         <section class="card">
-          <h2>Editor</h2>
+          <div class="card-title">
+            <div>
+              <h2>Editor</h2>
+              <p class="subtitle">Create or update a mail configuration profile.</p>
+            </div>
+            <span class="pill" id="form-mode">New</span>
+          </div>
           <form id="config-form">
             <input type="hidden" id="config-id" />
             <div class="row">
@@ -100,24 +109,46 @@
               <button type="button" id="delete-btn" class="danger" disabled>Deactivate</button>
             </div>
           </form>
-          <div class="status" id="status"></div>
+          <div class="status" id="status" role="status" aria-live="polite"></div>
         </section>
 
         <section class="card">
-          <h2>Configurations</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Alias</th>
-                <th>Server</th>
-                <th>Protocol</th>
-                <th>Port</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="table-body"></tbody>
-          </table>
+          <div class="card-title">
+            <div>
+              <h2>Configurations</h2>
+              <p class="subtitle">Browse, filter, and select entries to edit.</p>
+            </div>
+            <div class="stats">
+              <span class="stat-label">Total</span>
+              <span class="stat-value" id="config-count">0</span>
+            </div>
+          </div>
+          <div class="toolbar">
+            <label class="search">
+              <span>Search</span>
+              <input id="search-input" placeholder="Alias, server, protocol..." />
+            </label>
+            <div class="toolbar-meta" id="last-refresh">Last synced: --</div>
+          </div>
+          <div class="table-wrapper" aria-live="polite">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Alias</th>
+                  <th>Server</th>
+                  <th>Protocol</th>
+                  <th>Port</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="table-body"></tbody>
+            </table>
+            <div class="empty-state" id="empty-state">
+              <h3>No configurations found</h3>
+              <p>Adjust your search or create a new configuration using the editor.</p>
+            </div>
+          </div>
         </section>
       </div>
     </div>
